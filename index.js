@@ -38,14 +38,57 @@
 //     });
 // }
 
+// Section 3: Example of "Premature Optimizatiion is the root of all evils"
+function Stopwatch() {
+    
+    let startTime, endTime, running = false, duration = 0;
 
-function Circle(radius) {
-    this.radius = radius;
+    Object.defineProperty(this, 'startTime', {
+        get: function() { return startTime; },
+        set: function(value) { startTime = value; }
+    });
 
-    this.draw = function() {
-        conosle.log('draw');
-    }
+    Object.defineProperty(this, 'endTime', {
+        get: function() { return endTime; },
+        set: function(value) { endTime = value; }
+    });
+
+    Object.defineProperty(this, 'running', {
+        get: function() { return running; },
+        set: function(value) { running = value; }
+    });
+
+    Object.defineProperty(this, 'duration', {
+        get: function() { return duration; },
+        set: function(value) { duration = value; }
+    });
 }
 
-const c1 = new Circle(1);
-const c2 = new Circle(2);
+Stopwatch.prototype.start = function() { 
+    if (this.running)
+        throw new Error('Stopwatch already started.');
+
+    this.running = true;
+
+    this.startTime = new Date();
+};
+
+Stopwatch.prototype.stop = function() { 
+    if (!this.running)
+        throw new Error('Stopwatch already stopped.');
+
+    this.running = false;
+
+    this.endTime = new Date();
+
+    const seconds = (this.endTime.getTime() - this.startTime.getTime())/1000;
+
+    this.duration += seconds;
+};
+
+Stopwatch.prototype.Reset = function() {
+    this.duration = 0;
+    this.startTime = null;
+    this.endTime = null;
+    this.running = null;
+};
