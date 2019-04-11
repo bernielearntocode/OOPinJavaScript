@@ -34,10 +34,15 @@ class Square {
 
 // using WeakMaps to implement private properties and methods
 const _width = new WeakMap();
+const _move = new WeakMap();
 
 class Rectangle {
     constructor(width) {
         _width.set(this, width);
+
+        _move.set(this, () => {
+            
+        })
     }
 
     draw() {
