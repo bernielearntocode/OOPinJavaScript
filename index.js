@@ -1,5 +1,7 @@
 
-// Section 2: Stop-watch Exercise
+/******************************************************************************
+    Section 2: Stop-watch Exercise
+******************************************************************************/
 // function SW() {
     
 //     let startTime, endTime, running, duration = 0;
@@ -38,7 +40,10 @@
 //     });
 // }
 
-// Section 3: Example of "Premature Optimizatiion is the root of all evils"
+
+/******************************************************************************
+    Section 3: Example of "Premature Optimizatiion is the root of all evils"
+******************************************************************************/
 // function Stopwatch() {
     
 //     let startTime, endTime, running = false, duration = 0;
@@ -94,7 +99,9 @@
 // };
 
 
-// Section 4 : Prototypical Inheritance
+/******************************************************************************
+    Section 4 - Prototypical Inheritance
+******************************************************************************/
 // function extend(Child, Parent)
 // {
 //     Child.prototype = Object.create(Parent.prototype);
@@ -135,70 +142,105 @@
 // const c = new Circle(1, "red");
 
 
+/******************************************************************************
+    Section 4 - Exercise 1
+******************************************************************************/
 
-// Section 4 - Exercise 1
+// function HTMLElement () {
+//     this.click = function () {
+//         console.log('clicked');
+//     };
+// }
 
-function HTMLElement () {
-    this.click = function () {
-        console.log('clicked');
-    };
-}
-
-HTMLElement.prototype.focus = function () {
-    console.log('focused');
-}
+// HTMLElement.prototype.focus = function () {
+//     console.log('focused');
+// }
 
 
-function HTMLSelectElement (items = []) {
-    this.items = items;
+// function HTMLSelectElement (items = []) {
+//     this.items = items;
 
-    this.addItem = function(item) {
-        items.addItem(item);
+//     this.addItem = function(item) {
+//         items.addItem(item);
+//     }
+
+//     this.removeItem = function(item) {
+//         items.splice(this.items.indexof(item), 1);
+//     }
+
+//     this.render = function() {
+//         return `
+//             <select>${this.items.map(item => `
+//                 <option>${item}</option>`).join('')}
+//             </select>
+//         `;
+//     }
+// }
+
+// HTMLSelectElement.prototype = new HTMLElement();
+// HTMLSelectElement.prototype.constructor = HTMLSelectElement;
+
+
+
+// function HTMLImageElement(src) {
+//     this.src = src;
+
+//     this.render = function() {
+//         return `<img src=${src} />`;
+//     }
+// }
+
+// HTMLImageElement.prototype = new HTMLElement();
+// HTMLImageElement.prototype.constructor = HTMLImageElement;
+
+
+// const elements = [
+//     new HTMLSelectElement([1,2,3]),
+//     new HTMLImageElement('http://')
+// ];
+
+// for (let element of elements)
+// {
+//     console.log(element.render());
+// }
+
+/******************************************************************************
+    Section 5 - Exercise 1
+******************************************************************************/
+const _items = new WeakMap();
+
+class Stack {
+
+    constructor() {
+        _items.set(this, []);
     }
 
-    this.removeItem = function(item) {
-        items.splice(this.items.indexof(item), 1);
+    push(obj){
+        _items.get(this).push(obj);
     }
 
-    this.render = function() {
-        return `
-            <select>${this.items.map(item => `
-                <option>${item}</option>`).join('')}
-            </select>
-        `;
+    pop() {
+        const items = _items.get(this);
+
+        if (items.length === 0)
+            throw new Error('Stack is empty.');
+
+        return items.pop();
+    }
+
+    peek() {
+        const items = _items.get(this);
+
+        if (items.length === 0)
+            throw new Error('Stack is empty.');
+
+        return items[items.length-1];
+    }
+
+    count() {
+        return _items.get(this).length;
     }
 }
-
-HTMLSelectElement.prototype = new HTMLElement();
-HTMLSelectElement.prototype.constructor = HTMLSelectElement;
-
-
-
-function HTMLImageElement(src) {
-    this.src = src;
-
-    this.render = function() {
-        return `<img src=${src} />`;
-    }
-}
-
-HTMLImageElement.prototype = new HTMLElement();
-HTMLImageElement.prototype.constructor = HTMLImageElement;
-
-
-const elements = [
-    new HTMLSelectElement([1,2,3]),
-    new HTMLImageElement('http://')
-];
-
-for (let element of elements)
-{
-    console.log(element.render());
-}
-
-
-
-
 
 
 
